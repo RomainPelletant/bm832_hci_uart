@@ -1,4 +1,4 @@
-name: Build HCI UART basic sample for Fanstel BM832
+name: Build HCI UART with DFU for Fanstel BM832
 
 on: [push, pull_request]
 
@@ -24,10 +24,28 @@ jobs:
       - name: Build firmware
         working-directory: bm832_hci_uart
         run: |
-          west build ../zephyr/samples/bluetooth/hci_uart -b fanstel_bm832
+          west build -b fanstel_bm832 -s app_hci_uart_with_dfu
 
       - name: Archive firmware
         uses: actions/upload-artifact@v2
         with:
           name: firmware
           path: bm832_hci_uart/build/zephyr/zephyr.*
+
+      - name: Archive firmware
+        uses: actions/upload-artifact@v2
+        with:
+          name: signed_firmware
+          path: bm832_hci_uart/build/zephyr/app_signed.*
+
+      - name: Archive firmware
+        uses: actions/upload-artifact@v2
+        with:
+          name: firmware_for_update
+          path: bm832_hci_uart/build/zephyr/app_update.*
+
+      - name: Archive firmware
+        uses: actions/upload-artifact@v2
+        with:
+          name: test_firmware
+          path: bm832_hci_uart/build/zephyr/app_test_update.*
