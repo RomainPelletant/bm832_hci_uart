@@ -9,15 +9,12 @@
 
 / {
 	model = "Fanstel BM832 Board";
-	compatible = "vendor,fanstel-bm832";
+	compatible = "fanstel,bm832";
 
 	chosen {
-		//zephyr,console = &uart0;
 		zephyr,sram = &sram0;
 		zephyr,flash = &flash0;
-		zephyr,bt-mon-uart = &uart0;
 		zephyr,bt_c2h_uart = &uart0;
-		zephyr,bt-uart = &uart0;
 	};
 };
 
@@ -26,11 +23,12 @@
 };
 
 &uart0 {
-	compatible = "nordic,nrf-uarte";
+	compatible = "nordic,nrf-uart";
 	status = "okay";
 
-	current-speed = <115200>;
+	current-speed = <921600>;
 	pinctrl-0 = <&uart0_default>;
 	pinctrl-1 = <&uart0_sleep>;
 	pinctrl-names = "default", "sleep";
+	hw-flow-control;
 };
